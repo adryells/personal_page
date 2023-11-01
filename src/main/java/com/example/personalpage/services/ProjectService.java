@@ -18,13 +18,11 @@ public class ProjectService {
     private ProjectRepository projectRepository;
 
     public Optional<ProjectModel> getProjectById(UUID id){
-        Optional<ProjectModel> p = projectRepository.findById(id);
-
-        return p;
+        return projectRepository.findById(id);
     }
 
     public List<ProjectModel> getProjects(int page, int perPage){
-        PageRequest pageRequest = PageRequest.of(page, perPage);
+        PageRequest pageRequest = PageRequest.of(page - 1, perPage);
         Page<ProjectModel> projectPage = projectRepository.findAll(pageRequest);
 
         return projectPage.getContent();

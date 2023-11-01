@@ -1,11 +1,9 @@
 package com.example.personalpage.dtos;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.lang.reflect.Array;
 
 public record ProjectRecordDTO(
         @NotBlank @Size(min = 1, message = "Title must contain at least 1 char") String title,

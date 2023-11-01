@@ -18,9 +18,9 @@ public class ProjectModel extends RepresentationModel<ProjectModel> implements S
 
     private Integer developmentYear;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="id")
-    private List<TagModel> tags;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name="id")
+//    private List<TagModel> tags;
 
     @OneToMany
     @JoinColumn(name="id")
@@ -30,9 +30,9 @@ public class ProjectModel extends RepresentationModel<ProjectModel> implements S
         return id;
     }
 
-    public List<TagModel> getTags() {
-        return tags;
-    }
+//    public List<TagModel> getTags() {
+//        return tags;
+//    }
 
     public List<MediaItemModel> getRelatedMedia() {
         return relatedMedia;
@@ -90,9 +90,9 @@ public class ProjectModel extends RepresentationModel<ProjectModel> implements S
         this.shortDescription = shortDescription;
     }
 
-    public void setTags(List<TagModel> tags) {
-        this.tags = tags;
-    }
+//    public void setTags(List<TagModel> tags) {
+//        this.tags = tags;
+//    }
 
     public void setTitle(String title) {
         this.title = title;

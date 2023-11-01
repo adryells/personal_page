@@ -44,6 +44,7 @@ public class ProjectController {
     @PostMapping("/")
     public ResponseEntity<ProjectModel> createProject(@RequestBody @Valid ProjectRecordDTO projectData){
         ProjectModel projectModel = new ProjectModel();
+
         BeanUtils.copyProperties(projectData, projectModel);
         projectService.createProject(projectModel);
 
