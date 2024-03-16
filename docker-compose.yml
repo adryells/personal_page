@@ -1,0 +1,18 @@
+version: '3'
+
+volumes:
+  postgres_db_data:
+
+services:
+  db:
+    ports:
+      - "5432:5432"
+    image: postgres:16
+    volumes:
+      - postgres_db_data:/var/lib/postgresql/data
+    environment:
+      PGUSER: pp
+      POSTGRES_USER: pp
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pp
+      POSTGRES_PORT: 5432
