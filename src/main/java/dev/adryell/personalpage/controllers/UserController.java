@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/user")
@@ -29,15 +28,15 @@ public class UserController {
     private AuthTokenRepository authTokenRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<UUID> login(@RequestBody @Valid LoginDTO loginData, HttpServletRequest request){
+    public ResponseEntity<Object> login(@RequestBody @Valid LoginDTO loginData, HttpServletRequest request){
         User user = userRepository.findByEmail(loginData.email());
 
         if (user == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
 
         if (!user.passwordsMatch(loginData.password())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong password.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong password.");
         }
 
         AuthToken authToken = new AuthToken();
