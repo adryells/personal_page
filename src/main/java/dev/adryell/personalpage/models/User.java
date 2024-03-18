@@ -1,8 +1,6 @@
 package dev.adryell.personalpage.models;
 import jakarta.persistence.*;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -23,12 +21,6 @@ public class User extends BaseDateTime{
     @OneToOne
     @JoinColumn(name = "role_id")
     private Role role;
-
-    public boolean passwordsMatch(String password){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-        return encoder.matches(password, this.password);
-    }
 
     public Role getRole() {
         return role;
@@ -59,9 +51,7 @@ public class User extends BaseDateTime{
     }
 
     public void setPassword(String password) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-        this.password = encoder.encode(password);
+        this.password = password;
     }
 
     public UUID getId() {

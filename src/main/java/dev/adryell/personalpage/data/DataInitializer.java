@@ -25,6 +25,12 @@ public class DataInitializer {
     @Autowired
     private UserRepository userRepository;
 
+    record RoleData(List<String> permissions, String name, String slug, String description) {
+    }
+
+    record UserData(String role_slug, String name, String email, String password) {
+    }
+
     @PostConstruct
     public void init() {
         this.createPermissions();
@@ -33,29 +39,28 @@ public class DataInitializer {
     }
 
     public void createRoles() {
-        List<Map<String, Object>> roles_data = getRoleMaps();
+        List<RoleData> roles_data = getRolesData();
 
-        for (Map<String, Object> role_datum : roles_data) {
-            Role role = roleRepository.findBySlug((String) role_datum.get("slug"));
+        for (RoleData role_datum : roles_data) {
+            Role role = roleRepository.findBySlug(role_datum.slug);
 
             if (role != null) {
-                role.setName((String) role_datum.get("name"));
-                role.setDescription((String) role_datum.get("description"));
+                role.setName(role_datum.name);
+                role.setDescription(role_datum.description);
                 roleRepository.save(role);
                 System.out.println("Role " + role.getName() + " Atualizada.");
             } else {
                 Role new_role = new Role();
-                new_role.setName((String) role_datum.get("name"));
-                new_role.setSlug((String) role_datum.get("slug"));
-                new_role.setDescription((String) role_datum.get("description"));
+                new_role.setName(role_datum.name);
+                new_role.setSlug(role_datum.slug);
+                new_role.setDescription(role_datum.description);
                 Set<Permission> permissions = new HashSet<>();
 
-                for (Object permission_slug : (List<?>) role_datum.get("permissions")) {
-                    if (permission_slug instanceof String) {
-                        Permission permission = permissionRepository.findBySlug((String) permission_slug);
-                        permissions.add(permission);
-                    }
+                for (String permission_slug : role_datum.permissions) {
+                    Permission permission = permissionRepository.findBySlug(permission_slug);
+                    permissions.add(permission);
                 }
+
                 new_role.setPermissions(permissions);
                 roleRepository.save(new_role);
                 System.out.println("Role " + new_role.getName() + " Adicionada.");
@@ -63,7 +68,7 @@ public class DataInitializer {
         }
     }
 
-    private static List<Map<String, Object>> getRoleMaps() {
+    private static List<RoleData> getRolesData() {
         List<String> admin_permissions = Arrays.asList(
                 "create_post", "update_post", "delete_post", "get_post",
                 "create_project", "update_project", "delete_project", "get_project",
@@ -78,18 +83,8 @@ public class DataInitializer {
         );
 
         return new ArrayList<>(Arrays.asList(
-                Map.of(
-                        "permissions", admin_permissions,
-                        "name", "Admin",
-                        "slug", "admin",
-                        "description", "Can do everything."
-                ),
-                Map.of(
-                        "permissions", mod_permissions,
-                        "name", "Mod",
-                        "slug", "mod",
-                        "description", "Can do almost anything."
-                )
+                new RoleData(admin_permissions, "Admin", "admin", "Can do everything."),
+                new RoleData(mod_permissions, "Mod", "mod", "Can do almost anything.")
         ));
     }
 
@@ -122,40 +117,32 @@ public class DataInitializer {
     }
 
     public void createUsers() {
-        List<Map<String, String>> users_data = new ArrayList<>(Arrays.asList(
-                Map.of(
-                        "role_slug", "admin",
-                        "name", "Adryell",
-                        "email", "adryell@shrimpwave.com",
-                        "password", "87654321"
-                ),
-                Map.of(
-                        "role_slug", "mod",
-                        "name", "Jaw",
-                        "email", "jaw@shrimpwave.com",
-                        "password", "12345678"
-                )
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        List<UserData> users_data = new ArrayList<>(Arrays.asList(
+                new UserData("admin", "Adryell", "adryell@shrimpwave.com", "87654321"),
+                new UserData("mod", "Jaw", "jaw@shrimpwave.com", "12345678")
         ));
 
-        for (Map<String, String> user_datum : users_data) {
-            User user = userRepository.findByEmail(user_datum.get("email"));
+        for (UserData user_datum : users_data) {
+            User user = userRepository.findByEmail(user_datum.email);
 
             if (user != null) {
-                user.setName(user_datum.get("name"));
+                user.setName(user_datum.name);
 
-                user.setPassword(user_datum.get("password"));
-                Role role = roleRepository.findBySlug(user_datum.get("role_slug"));
+                user.setPassword(encoder.encode(user_datum.password));
+                Role role = roleRepository.findBySlug(user_datum.role_slug);
                 user.setRole(role);
                 userRepository.save(user);
                 System.out.println("Usuário " + user.getName() + " Atualizado.");
             } else {
                 user = new User();
-                user.setName(user_datum.get("name"));
-                user.setEmail(user_datum.get("email"));
+                user.setName(user_datum.name);
+                user.setEmail(user_datum.email);
 
-                user.setPassword(user_datum.get("password"));
+                user.setPassword(encoder.encode(user_datum.password));
 
-                Role role = roleRepository.findBySlug(user_datum.get("role_slug"));
+                Role role = roleRepository.findBySlug(user_datum.role_slug);
                 user.setRole(role);
                 userRepository.save(user);
                 System.out.println("Usuário " + user.getName() + " Adicionado.");
