@@ -4,6 +4,8 @@ import dev.adryell.personalpage.dtos.TagDTO;
 import dev.adryell.personalpage.dtos.updateTagDTO;
 import dev.adryell.personalpage.models.Tag;
 import dev.adryell.personalpage.repositories.TagRepository;
+import dev.adryell.personalpage.services.RequiresPermission;
+import dev.adryell.personalpage.utils.enums.Permissions;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ public class TagController {
     @Autowired
     private TagRepository tagRepository;
 
+    @RequiresPermission(Permissions.CREATE_TAG)
     @PostMapping("/create")
     public ResponseEntity<Object> createTag(@RequestBody @Valid TagDTO tagData) {
         Tag tag = new Tag();
@@ -38,6 +41,7 @@ public class TagController {
         return ResponseEntity.status(HttpStatus.CREATED).body(tagRepository.save(tag));
     }
 
+    @RequiresPermission(Permissions.UPDATE_TAG)
     @PutMapping("/update/{id}")
     public ResponseEntity<Object> updateTag(@PathVariable Long id, @RequestBody @Valid updateTagDTO tagData) {
         Optional<Tag> existingTag = tagRepository.findById(id);
@@ -64,6 +68,8 @@ public class TagController {
 
         return ResponseEntity.ok(tagRepository.save(updatingTag));
     }
+
+    @RequiresPermission(Permissions.DELETE_TAG)
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Object> deleteTag(@PathVariable Long id) {
         Optional<Tag> existingTag = tagRepository.findById(id);
