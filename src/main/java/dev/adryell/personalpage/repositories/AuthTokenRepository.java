@@ -13,5 +13,5 @@ public interface AuthTokenRepository extends JpaRepository<AuthToken, Long> {
     @Query("SELECT authToken FROM AuthToken authToken WHERE authToken.user.id = ?1 AND authToken.active = true")
     List<AuthToken> findAllActiveByUserId(UUID userId);
 
-    AuthToken findByToken(UUID token);
+    AuthToken findByTokenAndActiveTrue(UUID token);
 }

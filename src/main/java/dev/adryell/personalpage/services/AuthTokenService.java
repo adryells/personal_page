@@ -15,7 +15,7 @@ public class AuthTokenService {
     private AuthTokenRepository authTokenRepository;
 
     public User getUserFromToken(UUID token) {
-        AuthToken authToken = authTokenRepository.findByToken(token);
+        AuthToken authToken = authTokenRepository.findByTokenAndActiveTrue(token);
         if (authToken != null) {
             return authToken.getUser();
         }
