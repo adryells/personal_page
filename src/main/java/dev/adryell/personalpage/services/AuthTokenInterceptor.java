@@ -1,5 +1,6 @@
 package dev.adryell.personalpage.services;
 
+import dev.adryell.personalpage.exceptions.AuthenticationException;
 import dev.adryell.personalpage.models.User;
 import dev.adryell.personalpage.utils.enums.Permissions;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,31 +26,23 @@ public class AuthTokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = extractTokenFromRequest(request);
         if (token == null) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write("Unauthorized. Token not provided.");
-            return false;
+            throw new AuthenticationException("Unauthorized. Token not provided.", HttpStatus.UNAUTHORIZED);
         }
 
         token = token.replace("Bearer ", "");
 
         if (!isValidUUID(token)){
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-            response.getWriter().write("Unauthorized. Invalid token format.");
-            return false;
+            throw new AuthenticationException("Unauthorized. Invalid token format.", HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
         User user = authTokenService.getUserFromToken(UUID.fromString(token));
         if (user == null) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write("Unauthorized. Invalid token.");
-            return false;
+            throw new AuthenticationException("Unauthorized. Invalid token.", HttpStatus.UNAUTHORIZED);
         }
 
         Permissions requiredPermission = determineRequiredPermission(handler);
         if (!roleService.roleHasPermission(user.getRole().getId(), requiredPermission.name().toLowerCase())) {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.getWriter().write("Access denied. You don't have permission to access this resource.");
-            return false;
+            throw new AuthenticationException("Access denied. You don't have permission to access this resource.", HttpStatus.FORBIDDEN);
         }
 
         return true;

@@ -11,6 +11,6 @@ import java.util.List;
 public interface RoleRepository extends JpaRepository<Role, Long> {
     Role findBySlug(String slug);
 
-    @Query("SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END FROM Role r JOIN r.permissions p WHERE p.slug = :permissionSlug AND r.id = :roleId")
+    @Query("SELECT COUNT(r) > 0 FROM Role r JOIN r.permissions p WHERE p.slug = :permissionSlug AND r.id = :roleId")
     boolean existsByPermissionSlugAndRoleId(String permissionSlug, Long roleId);
 }
