@@ -6,6 +6,7 @@ import dev.adryell.personalpage.models.User;
 import dev.adryell.personalpage.repositories.PermissionRepository;
 import dev.adryell.personalpage.repositories.RoleRepository;
 import dev.adryell.personalpage.repositories.UserRepository;
+import dev.adryell.personalpage.utils.enums.Roles;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -83,8 +84,8 @@ public class DataInitializer {
         );
 
         return new ArrayList<>(Arrays.asList(
-                new RoleData(admin_permissions, "Admin", "admin", "Can do everything."),
-                new RoleData(mod_permissions, "Mod", "mod", "Can do almost anything.")
+                new RoleData(admin_permissions, Roles.ADMIN.toString(), "admin", "Can do everything."),
+                new RoleData(mod_permissions, Roles.MOD.toString(), "mod", "Can do almost anything.")
         ));
     }
 
@@ -120,8 +121,8 @@ public class DataInitializer {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         List<UserData> users_data = new ArrayList<>(Arrays.asList(
-                new UserData("admin", "Adryell", "adryell@shrimpwave.com", "87654321"),
-                new UserData("mod", "Jaw", "jaw@shrimpwave.com", "12345678")
+                new UserData(Roles.ADMIN.toString().toLowerCase(), "Adryell", "adryell@shrimpwave.com", "87654321"),
+                new UserData(Roles.MOD.toString().toLowerCase(), "Jaw", "jaw@shrimpwave.com", "12345678")
         ));
 
         for (UserData user_datum : users_data) {

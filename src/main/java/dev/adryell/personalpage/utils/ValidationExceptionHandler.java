@@ -1,5 +1,6 @@
 package dev.adryell.personalpage.utils;
 
+import dev.adryell.personalpage.exceptions.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -17,5 +18,10 @@ public class ValidationExceptionHandler {
             errorMessage.append(error.getField()).append(": ").append(error.getDefaultMessage()).append("\n");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage.toString());
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<?> handleAuthenticationException(AuthenticationException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
     }
 }
