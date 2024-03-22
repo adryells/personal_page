@@ -1,7 +1,7 @@
 package dev.adryell.personalpage.controllers;
 
 import dev.adryell.personalpage.dtos.TagDTO;
-import dev.adryell.personalpage.dtos.updateTagDTO;
+import dev.adryell.personalpage.dtos.UpdateTagDTO;
 import dev.adryell.personalpage.models.Tag;
 import dev.adryell.personalpage.repositories.TagRepository;
 import dev.adryell.personalpage.services.RequiresPermission;
@@ -43,7 +43,7 @@ public class TagController {
 
     @RequiresPermission(Permissions.UPDATE_TAG)
     @PutMapping("/update/{id}")
-    public ResponseEntity<Object> updateTag(@PathVariable Long id, @RequestBody @Valid updateTagDTO tagData) {
+    public ResponseEntity<Object> updateTag(@PathVariable Long id, @RequestBody @Valid UpdateTagDTO tagData) {
         Optional<Tag> existingTag = tagRepository.findById(id);
 
         if (existingTag.isEmpty()) {
