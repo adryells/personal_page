@@ -5,6 +5,7 @@ import dev.adryell.personalpage.dtos.UpdatePostDTO;
 import dev.adryell.personalpage.models.Post;
 import dev.adryell.personalpage.models.Tag;
 import dev.adryell.personalpage.models.User;
+import dev.adryell.personalpage.projections.PostProjection;
 import dev.adryell.personalpage.repositories.AuthTokenRepository;
 import dev.adryell.personalpage.repositories.PostRepository;
 import dev.adryell.personalpage.repositories.TagRepository;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/post")
@@ -64,7 +67,7 @@ public class PostController {
 
         postRepository.save(post);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(post.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(createPostProjection(post));
     }
 
     private Set<Tag> findTagsByIds(List<Long> tagIds) {
@@ -127,7 +130,9 @@ public class PostController {
             post.setTags(tags);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body("Update successfully.");
+        postRepository.save(post);
+
+        return ResponseEntity.status(HttpStatus.OK).body(createPostProjection(post));
     }
 
     @RequiresPermission(Permissions.DELETE_POST)
@@ -141,7 +146,7 @@ public class PostController {
 
         postRepository.delete(existingPost.get());
 
-        return ResponseEntity.ok("Deleted successful.");
+        return ResponseEntity.ok("Deleted successfully.");
     }
 
     @GetMapping("/{id}")
@@ -149,12 +154,12 @@ public class PostController {
         Optional<Post> existingPost = postRepository.findById(id);
 
         return existingPost.
-                <ResponseEntity<Object>>map(post -> ResponseEntity.status(HttpStatus.OK).body(post))
+                <ResponseEntity<Object>>map(post -> ResponseEntity.status(HttpStatus.OK).body(createPostProjection(post)))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post not found."));
     }
 
     @GetMapping("/")
-    public Page<Post> getPosts(
+    public Page<PostProjection> getPosts(
             @RequestParam(required = false) Boolean active,
             @RequestParam(required = false) UUID creatorId,
             Pageable pageable
@@ -171,7 +176,40 @@ public class PostController {
                     criteriaBuilder.equal(root.get("creator").get("id"), creatorId));
         }
 
-        return postRepository.findAll(specification, pageable);
+        Page<Post> posts = postRepository.findAll(specification, pageable);
+
+        return mapPostsToProjection(posts);
+    }
+
+    private Page<PostProjection> mapPostsToProjection(Page<Post> posts) {
+        List<PostProjection> projections = new ArrayList<>();
+        for (Post post : posts.getContent()) {
+            projections.add(this.createPostProjection(post));
+        }
+        return new PageImpl<>(projections, posts.getPageable(), posts.getTotalElements());
+    }
+
+    private PostProjection createPostProjection(Post post){
+        return new PostProjectionImpl(
+                post.getId(),
+                post.getTitle(),
+                post.getDescription(),
+                post.getContent(),
+                post.isActive(),
+                post.getCreator().getId(),
+                post.getTags().stream().map(Tag::getName).collect(Collectors.toList())
+        );
+    }
+
+    private record PostProjectionImpl(
+            Long id,
+            String title,
+            String description,
+            String content,
+            Boolean active,
+            UUID creatorId,
+            List<String> tags
+    ) implements PostProjection {
     }
 
 }
