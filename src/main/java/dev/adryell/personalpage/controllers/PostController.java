@@ -58,7 +58,7 @@ public class PostController {
         if (postData.tagIds() != null) {
             Set<Tag> tags = this.findTagsByIds(postData.tagIds());
 
-            if (tags == null) {
+            if (tags.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("One or more tags not found.");
             }
 
@@ -71,16 +71,10 @@ public class PostController {
     }
 
     private Set<Tag> findTagsByIds(List<Long> tagIds) {
-        Set<Tag> tags = new HashSet<>();
-        for (Long tagId : tagIds) {
-            Optional<Tag> tagOptional = tagRepository.findById(tagId);
-            if (tagOptional.isPresent()) {
-                tags.add(tagOptional.get());
-            } else {
-                return null;
-            }
-        }
-        return tags;
+        return tagIds.stream()
+                .map(tagRepository::findById)
+                .flatMap(Optional::stream)
+                .collect(Collectors.toSet());
     }
 
     @RequiresPermission(Permissions.UPDATE_POST)
