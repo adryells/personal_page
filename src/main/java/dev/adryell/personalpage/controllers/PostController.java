@@ -2,6 +2,7 @@ package dev.adryell.personalpage.controllers;
 
 import dev.adryell.personalpage.dtos.PostDTO;
 import dev.adryell.personalpage.dtos.UpdatePostDTO;
+import dev.adryell.personalpage.models.Media;
 import dev.adryell.personalpage.models.Post;
 import dev.adryell.personalpage.models.Tag;
 import dev.adryell.personalpage.models.User;
@@ -64,6 +65,14 @@ public class PostController {
 
             post.setTags(tags);
         }
+
+        Media new_media = mediaRepository.findById(postData.);
+
+        post.getMedias().forEach(media -> {
+            if (media.getMediaContentType().getSlug() == new_media.getMediaContentType().getSlug()){
+                post.getMedias().remove(media);
+            }
+        });
 
         postRepository.save(post);
 

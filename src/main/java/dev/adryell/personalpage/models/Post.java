@@ -34,6 +34,22 @@ public class Post extends BaseDateTime{
     )
     private Set<Tag> tags;
 
+    @ManyToMany
+    @JoinTable(
+            name = "post_media",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "media_id")
+    )
+    private Set<Media> medias;
+
+    public void setMedias(Set<Media> medias) {
+        this.medias = medias;
+    }
+
+    public Set<Media> getMedias() {
+        return medias;
+    }
+
     public Long getId() {
         return id;
     }

@@ -16,5 +16,8 @@ public enum Permissions {
     GET_USER,
     DELETE_USER,
     CREATE_USER,
-    UPDATE_USER
+    UPDATE_USER,
+    UPLOAD_MEDIA,
+    UPDATE_MEDIA,
+    DELETE_MEDIA
 }
