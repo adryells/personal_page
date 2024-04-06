@@ -17,7 +17,6 @@ repositories {
 
 ext {
 	set('springCloudGcpVersion', "5.1.0")
-//	set('springCloudVersion', "2023.0.1")
 }
 
 

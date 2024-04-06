@@ -1,5 +1,6 @@
 package dev.adryell.personalpage.models;
 
+import dev.adryell.personalpage.config.GeneralConfig;
 import jakarta.persistence.*;
 
 @Entity
@@ -49,7 +50,8 @@ public class Media extends BaseDateTime{
     }
 
     public String getURL(){
-        return "https://storage.googleapis.com/yell-personal-page/" + getTitle();
+        GeneralConfig config = new GeneralConfig();
+        return config.getGCP_PREFIX_URL() + "/" + getTitle();
     }
 
     public void setMediaContentType(MediaContentType mediaContentType) {

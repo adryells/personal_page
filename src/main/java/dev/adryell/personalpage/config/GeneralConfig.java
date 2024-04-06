@@ -11,4 +11,8 @@ public class GeneralConfig {
     public String getGCP_PUBLIC_URL() {
         return GCP_PUBLIC_URL;
     }
+
+    public String getGCP_PREFIX_URL(){
+        return getGCP_PUBLIC_URL() + getGCP_BUCKET_NAME();
+    }
 }
