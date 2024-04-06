@@ -11,6 +11,8 @@ public record UpdatePostDTO(
         @NotBlank(message = "Field can't be blank.") String content,
         Boolean active,
         List<Long> tagIds,
-        UUID creatorId
+        UUID creatorId,
+        Long thumbnailId,
+        List<Long> postContentIds
 ) {
 }

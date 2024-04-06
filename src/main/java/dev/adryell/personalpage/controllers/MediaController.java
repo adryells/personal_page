@@ -6,7 +6,6 @@ import com.google.cloud.storage.Storage;
 import dev.adryell.personalpage.config.GeneralConfig;
 import dev.adryell.personalpage.models.*;
 import dev.adryell.personalpage.projections.MediaProjection;
-import dev.adryell.personalpage.projections.PostProjection;
 import dev.adryell.personalpage.repositories.AuthTokenRepository;
 import dev.adryell.personalpage.repositories.MediaContentTypeRepository;
 import dev.adryell.personalpage.repositories.MediaRepository;
@@ -19,14 +18,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/media")
@@ -46,11 +44,6 @@ public class MediaController {
     @Autowired
     MediaContentTypeRepository mediaContentTypeRepository;
 
-//    public MediaController(Storage storage, GeneralConfig config){
-//        this.storage = storage;
-//        this.config = config;
-//    }
-
     @RequiresPermission(Permissions.UPLOAD_MEDIA)
     @PostMapping("/upload-media")
     public Object uploadMedia(@RequestParam("file") MultipartFile file, @RequestParam("content_type_slug") String contentTypeSlug, HttpServletRequest request) throws IOException {
@@ -60,7 +53,8 @@ public class MediaController {
 
         Media media;
         try {
-            BlobId id = BlobId.of(config.getGCP_BUCKET_NAME(), fileName);
+            String encodedFileName = encodeFileName(fileName);
+            BlobId id = BlobId.of(config.getGCP_BUCKET_NAME(), encodedFileName);
             BlobInfo info = BlobInfo.newBuilder(id).build();
             byte[] arr = file.getBytes();
             storage.create(info, arr);
@@ -77,7 +71,7 @@ public class MediaController {
             User user = authTokenRepository.findByTokenAndActiveTrue(token).getUser();
             media.setCreator(user);
 
-            media.setTitle(fileName);
+            media.setTitle(encodedFileName);
             media.setSize(size.toString());
             media.setMimetype(mimetype);
             media.setMediaContentType(mediaContentType.get());
@@ -90,6 +84,16 @@ public class MediaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createMediaProjection(media));
     }
 
+    private String encodeFileName(String originalFileName){
+        String randomUUID = UUID.randomUUID().toString();
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        String formattedDateTime = currentDateTime.format(formatter);
+
+        return randomUUID + "_" + formattedDateTime + "_" + originalFileName;
+    }
+
     private MediaProjection createMediaProjection(Media media){
         return new MediaProjectionImpl(
                 media.getId(),
@@ -98,7 +102,8 @@ public class MediaController {
                 media.getCreator().getId(),
                 media.getSize(),
                 media.getMimetype(),
-                media.getMediaContentType().getId()
+                media.getMediaContentType().getId(),
+                media.getURL()
         );
     }
 
@@ -109,7 +114,31 @@ public class MediaController {
             UUID creatorId,
             String size,
             String mimetype,
-            Long mediaContentTypeId
+            Long mediaContentTypeId,
+            String url
     ) implements MediaProjection {
+    }
+
+    @RequiresPermission(Permissions.DELETE_MEDIA)
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteMedia(@PathVariable Long id) {
+        Optional<Media> existingMedia = mediaRepository.findById(id);
+
+        if (existingMedia.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Media not found.");
+        }
+
+        mediaRepository.delete(existingMedia.get());
+
+        return ResponseEntity.ok("Deleted successful.");
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getMediaById(@PathVariable Long id) {
+        Optional<Media> existingMedia = mediaRepository.findById(id);
+
+        return existingMedia.
+                <ResponseEntity<Object>>map(tag -> ResponseEntity.status(HttpStatus.OK).body(createMediaProjection(tag)))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Media not found."));
     }
 }

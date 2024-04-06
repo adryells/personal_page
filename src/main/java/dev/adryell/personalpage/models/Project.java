@@ -1,5 +1,6 @@
 package dev.adryell.personalpage.models;
 
+import dev.adryell.personalpage.utils.enums.MediaContentTypes;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -73,6 +74,18 @@ public class Project extends BaseDateTime{
 
     public User getCreator() {
         return creator;
+    }
+
+    public Media getThumbnail(){
+        return getMedias()
+                .stream()
+                .filter(
+                        media -> MediaContentTypes.PROJECT_THUMBNAIL.toString().toLowerCase().equalsIgnoreCase(
+                                media.getMediaContentType().getSlug()
+                        )
+                )
+                .findFirst()
+                .orElse(null);
     }
 
     public void setDescription(String description) {

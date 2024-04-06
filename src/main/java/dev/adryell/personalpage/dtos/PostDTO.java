@@ -10,6 +10,8 @@ public record PostDTO(
         @NotBlank(message = "Field can't be blank.") @NotNull(message = "Field can't be null.") String description,
         @NotBlank(message = "Field can't be blank.") @NotNull(message = "Field can't be null.") String content,
         Boolean active,
-        List<Long> tagIds
+        List<Long> tagIds,
+        Long thumbnailId,
+        List<Long> postContentIds
 ) {
 }

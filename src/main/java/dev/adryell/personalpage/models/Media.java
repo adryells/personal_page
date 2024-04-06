@@ -48,6 +48,10 @@ public class Media extends BaseDateTime{
         return mediaContentType;
     }
 
+    public String getURL(){
+        return "https://storage.googleapis.com/yell-personal-page/" + getTitle();
+    }
+
     public void setMediaContentType(MediaContentType mediaContentType) {
         this.mediaContentType = mediaContentType;
     }

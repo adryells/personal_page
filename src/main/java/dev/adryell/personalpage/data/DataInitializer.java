@@ -8,6 +8,7 @@ import dev.adryell.personalpage.repositories.MediaContentTypeRepository;
 import dev.adryell.personalpage.repositories.PermissionRepository;
 import dev.adryell.personalpage.repositories.RoleRepository;
 import dev.adryell.personalpage.repositories.UserRepository;
+import dev.adryell.personalpage.utils.enums.MediaContentTypes;
 import dev.adryell.personalpage.utils.enums.Roles;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class DataInitializer {
     record UserData(String role_slug, String name, String email, String password) {
     }
 
-    record MediaContentTypeData(String name, String description) {
+    record MediaContentTypeData(MediaContentTypes name, String description) {
     }
 
     @PostConstruct
@@ -162,11 +163,11 @@ public class DataInitializer {
 
     public void createMediaContentTypes() {
         List<MediaContentTypeData> media_content_type_data = new ArrayList<>(Arrays.asList(
-                new MediaContentTypeData("Profile picture", "User's profile picture."),
-                new MediaContentTypeData("Tag icon", "Tag's icon."),
-                new MediaContentTypeData("Post thumbnail", "Post's thumbnail."),
-                new MediaContentTypeData("Post content", "Post's content."),
-                new MediaContentTypeData("Project thumbnail", "Project's thumbnail.")
+                new MediaContentTypeData(MediaContentTypes.PROFILE_PICTURE, "User's profile picture."),
+                new MediaContentTypeData(MediaContentTypes.TAG_ICON, "Tag's icon."),
+                new MediaContentTypeData(MediaContentTypes.POST_THUMBNAIL, "Post's thumbnail."),
+                new MediaContentTypeData(MediaContentTypes.POST_CONTENT, "Post's content."),
+                new MediaContentTypeData(MediaContentTypes.PROJECT_THUMBNAIL, "Project's thumbnail.")
         ));
 
         media_content_type_data.forEach(this::insertMediaContentType);
@@ -175,16 +176,18 @@ public class DataInitializer {
     private void insertMediaContentType(MediaContentTypeData datum){
         MediaContentType mediaContentType = new MediaContentType();
 
-        String slug = datum.name.replace(" ", "_").toLowerCase();
+        String slug = datum.name.toString().toLowerCase();
         Optional<MediaContentType> existingMediaContentType = mediaContentTypeRepository.findBySlug(slug);
+
         if (existingMediaContentType.isPresent()){
             mediaContentType = existingMediaContentType.get();
             System.out.println("Updating media content type: " + mediaContentType.getSlug());
         } else {
             mediaContentType.setSlug(slug);
-            mediaContentType.setName(datum.name);
+            mediaContentType.setName(datum.name.toString().replace("_", " "));
             System.out.println("Adding media content type: " + slug);
         }
+
         mediaContentType.setDescription(datum.description);
         mediaContentTypeRepository.save(mediaContentType);
     }
