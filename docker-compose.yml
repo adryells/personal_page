@@ -1,5 +1,3 @@
-version: '3'
-
 volumes:
   postgres_db_data:
 
@@ -11,8 +9,6 @@ services:
     volumes:
       - postgres_db_data:/var/lib/postgresql/data
     environment:
-      PGUSER: pp
       POSTGRES_USER: pp
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: pp
-      POSTGRES_PORT: 5432

@@ -9,6 +9,7 @@ import dev.adryell.personalpage.projections.MediaProjection;
 import dev.adryell.personalpage.repositories.AuthTokenRepository;
 import dev.adryell.personalpage.repositories.MediaContentTypeRepository;
 import dev.adryell.personalpage.repositories.MediaRepository;
+import dev.adryell.personalpage.services.ConfigService;
 import dev.adryell.personalpage.services.RequiresPermission;
 import dev.adryell.personalpage.utils.enums.Permissions;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +34,12 @@ public class MediaController {
     @Autowired
     private Storage storage;
 
-    private final GeneralConfig config = new GeneralConfig();
+    private final GeneralConfig config;
+
+    @Autowired
+    public MediaController(GeneralConfig config) {
+        this.config = config;
+    }
 
     @Autowired
     AuthTokenRepository authTokenRepository;

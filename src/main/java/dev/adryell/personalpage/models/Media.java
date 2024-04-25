@@ -1,10 +1,16 @@
 package dev.adryell.personalpage.models;
 
-import dev.adryell.personalpage.config.GeneralConfig;
+import dev.adryell.personalpage.services.ConfigService;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 public class Media extends BaseDateTime{
+
+    @Transient
+    @Autowired
+    private ConfigService configService = new ConfigService();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,8 +56,7 @@ public class Media extends BaseDateTime{
     }
 
     public String getURL(){
-        GeneralConfig config = new GeneralConfig();
-        return config.getGCP_PREFIX_URL() + "/" + getTitle();
+        return configService.generateURL(getTitle());
     }
 
     public void setMediaContentType(MediaContentType mediaContentType) {

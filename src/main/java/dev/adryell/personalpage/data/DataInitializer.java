@@ -162,13 +162,13 @@ public class DataInitializer {
     }
 
     public void createMediaContentTypes() {
-        List<MediaContentTypeData> media_content_type_data = new ArrayList<>(Arrays.asList(
+        List<MediaContentTypeData> media_content_type_data = List.of(
                 new MediaContentTypeData(MediaContentTypes.PROFILE_PICTURE, "User's profile picture."),
                 new MediaContentTypeData(MediaContentTypes.TAG_ICON, "Tag's icon."),
                 new MediaContentTypeData(MediaContentTypes.POST_THUMBNAIL, "Post's thumbnail."),
                 new MediaContentTypeData(MediaContentTypes.POST_CONTENT, "Post's content."),
                 new MediaContentTypeData(MediaContentTypes.PROJECT_THUMBNAIL, "Project's thumbnail.")
-        ));
+        );
 
         media_content_type_data.forEach(this::insertMediaContentType);
     }
