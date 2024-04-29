@@ -37,11 +37,6 @@ public class MediaController {
     @Autowired
     private GeneralConfig config;
 
-//    @Autowired
-//    public MediaController(GeneralConfig config) {
-//        this.config = config;
-//    }
-
     @Autowired
     AuthTokenRepository authTokenRepository;
 
