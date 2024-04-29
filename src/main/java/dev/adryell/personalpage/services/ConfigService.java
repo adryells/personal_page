@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ConfigService {
     @Autowired
-    private GeneralConfig config = new GeneralConfig();
+    private GeneralConfig config;
 
     public String generateURL(String title) {
         return config.getGcpPrefixUrl() + "/" + title;

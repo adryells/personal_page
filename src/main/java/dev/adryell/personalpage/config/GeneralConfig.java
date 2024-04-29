@@ -1,34 +1,39 @@
 package dev.adryell.personalpage.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
 
 
-import org.springframework.stereotype.Component;
+@Configuration
+@PropertySource("classpath:application.properties")
+public class GeneralConfig implements EnvironmentAware {
 
-@Component
-@ConfigurationProperties
-public class GeneralConfig {
+    static Environment environment;
 
-    private String GCP_BUCKET_NAME;
-    private String GCP_PUBLIC_URL;
-
-    public String getGCP_BUCKET_NAME() {
-        return GCP_BUCKET_NAME;
+    @Override
+    public void setEnvironment(final Environment environment) {
+        GeneralConfig.environment = environment;
     }
 
-    public void setGCP_BUCKET_NAME(String GCP_BUCKET_NAME) {
-        this.GCP_BUCKET_NAME = GCP_BUCKET_NAME;
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 
-    public String getGCP_PUBLIC_URL() {
-        return GCP_PUBLIC_URL;
+    public static String getGCP_BUCKET_NAME() {
+        return environment.getProperty("gcp.GCP_BUCKET_NAME");
     }
 
-    public void setGCP_PUBLIC_URL(String GCP_PUBLIC_URL) {
-        this.GCP_PUBLIC_URL = GCP_PUBLIC_URL;
+    public static String getGCP_PUBLIC_URL() {
+        return environment.getProperty("gcp.GCP_PUBLIC_URL");
     }
 
-    public String getGcpPrefixUrl() {
-        return GCP_PUBLIC_URL + GCP_BUCKET_NAME;
+    public static String getGcpPrefixUrl() {
+        return environment.getProperty("gcp.GCP_PUBLIC_URL") + environment.getProperty("gcp.GCP_BUCKET_NAME");
     }
 }

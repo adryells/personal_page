@@ -34,12 +34,13 @@ public class MediaController {
     @Autowired
     private Storage storage;
 
-    private final GeneralConfig config;
-
     @Autowired
-    public MediaController(GeneralConfig config) {
-        this.config = config;
-    }
+    private GeneralConfig config;
+
+//    @Autowired
+//    public MediaController(GeneralConfig config) {
+//        this.config = config;
+//    }
 
     @Autowired
     AuthTokenRepository authTokenRepository;
