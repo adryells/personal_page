@@ -1,5 +1,6 @@
 package dev.adryell.personalpage.models;
 
+import dev.adryell.personalpage.utils.enums.MediaContentTypes;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -34,6 +35,22 @@ public class Post extends BaseDateTime{
     )
     private Set<Tag> tags;
 
+    @ManyToMany
+    @JoinTable(
+            name = "post_media",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "media_id")
+    )
+    private Set<Media> medias;
+
+    public void setMedias(Set<Media> medias) {
+        this.medias = medias;
+    }
+
+    public Set<Media> getMedias() {
+        return medias;
+    }
+
     public Long getId() {
         return id;
     }
@@ -56,6 +73,18 @@ public class Post extends BaseDateTime{
 
     public String getTitle() {
         return title;
+    }
+
+    public Media getThumbnail(){
+        return getMedias()
+                .stream()
+                .filter(
+                        media -> MediaContentTypes.POST_THUMBNAIL.toString().toLowerCase().equalsIgnoreCase(
+                                media.getMediaContentType().getSlug()
+                        )
+                )
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean isActive() {

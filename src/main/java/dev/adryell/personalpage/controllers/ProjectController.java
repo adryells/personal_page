@@ -1,19 +1,12 @@
 package dev.adryell.personalpage.controllers;
 
-import dev.adryell.personalpage.dtos.PostDTO;
 import dev.adryell.personalpage.dtos.ProjectDTO;
 import dev.adryell.personalpage.dtos.UpdateProjectDTO;
-import dev.adryell.personalpage.models.Post;
-import dev.adryell.personalpage.models.Project;
-import dev.adryell.personalpage.models.Tag;
-import dev.adryell.personalpage.models.User;
-import dev.adryell.personalpage.projections.PostProjection;
+import dev.adryell.personalpage.models.*;
 import dev.adryell.personalpage.projections.ProjectProjection;
-import dev.adryell.personalpage.repositories.AuthTokenRepository;
-import dev.adryell.personalpage.repositories.ProjectRepository;
-import dev.adryell.personalpage.repositories.TagRepository;
-import dev.adryell.personalpage.repositories.UserRepository;
+import dev.adryell.personalpage.repositories.*;
 import dev.adryell.personalpage.services.RequiresPermission;
+import dev.adryell.personalpage.utils.enums.MediaContentTypes;
 import dev.adryell.personalpage.utils.enums.Permissions;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -25,6 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,6 +39,9 @@ public class ProjectController {
     @Autowired
     AuthTokenRepository authTokenRepository;
 
+    @Autowired
+    MediaRepository mediaRepository;
+
     @PostMapping("/create")
     ResponseEntity<Object> createProject(@RequestBody @Valid ProjectDTO projectData, HttpServletRequest request) {
         Project project = new Project();
@@ -64,6 +61,13 @@ public class ProjectController {
             }
 
             project.setTags(tags);
+        }
+
+        try{
+            project.setMedias(new HashSet<>());
+            updateProjectMedias(projectData.thumbnailId(), project);
+        } catch (ResponseStatusException exception) {
+            return ResponseEntity.status(exception.getStatusCode()).body(exception.getMessage());
         }
 
         projectRepository.save(project);
@@ -140,9 +144,37 @@ public class ProjectController {
             project.setTags(tags);
         }
 
+        try{
+            project.setMedias(new HashSet<>());
+            updateProjectMedias(projectData.thumbnailId(), project);
+        } catch (ResponseStatusException exception) {
+            return ResponseEntity.status(exception.getStatusCode()).body(exception.getMessage());
+        }
+
         projectRepository.save(project);
 
         return ResponseEntity.status(HttpStatus.OK).body(createProjectProjection(project));
+    }
+
+    private void updateProjectMedias(Long thumbnailId, Project project){
+        if (thumbnailId != null){
+            Media new_thumbnail = mediaRepository.findById(thumbnailId)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Thumbnail not found."));
+
+            if (!new_thumbnail.getMediaContentType().getSlug().equalsIgnoreCase(MediaContentTypes.PROJECT_THUMBNAIL.toString())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Media must be a thumbnail.");
+            }
+            removeMediaByContentType(project, MediaContentTypes.PROJECT_THUMBNAIL);
+            project.getMedias().add(new_thumbnail);
+        }
+    }
+
+    private void removeMediaByContentType(Project project, MediaContentTypes contentType) {
+        if (project.getMedias() != null){
+            project.getMedias().removeIf(
+                    media -> media.getMediaContentType().getSlug().equalsIgnoreCase(contentType.toString())
+            );
+        }
     }
 
     @RequiresPermission(Permissions.DELETE_PROJECT)
@@ -181,7 +213,8 @@ public class ProjectController {
                 project.getDescription(),
                 project.isActive(),
                 project.getCreator().getId(),
-                project.getTags().stream().map(Tag::getName).collect(Collectors.toList())
+                project.getTags().stream().map(Tag::getName).collect(Collectors.toList()),
+                project.getThumbnail() != null ? project.getThumbnail().getURL() : null
         );
     }
 
@@ -191,7 +224,8 @@ public class ProjectController {
             String description,
             Boolean active,
             UUID creatorId,
-            List<String> tags
+            List<String> tags,
+            String thumbnailURL
     ) implements ProjectProjection {
     }
 }

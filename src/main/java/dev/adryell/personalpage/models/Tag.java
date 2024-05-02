@@ -1,6 +1,9 @@
 package dev.adryell.personalpage.models;
 
+import dev.adryell.personalpage.utils.enums.MediaContentTypes;
 import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class Tag extends BaseDateTime{
@@ -16,6 +19,34 @@ public class Tag extends BaseDateTime{
 
     @Column(nullable = false)
     private boolean active = true;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tag_media",
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "media_id")
+    )
+    private Set<Media> medias;
+
+    public Media getIcon(){
+        return getMedias()
+                .stream()
+                .filter(
+                        media -> MediaContentTypes.TAG_ICON.toString().toLowerCase().equalsIgnoreCase(
+                                media.getMediaContentType().getSlug()
+                        )
+                )
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Set<Media> getMedias() {
+        return medias;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
 
     public Long getId() {
         return id;
@@ -43,5 +74,9 @@ public class Tag extends BaseDateTime{
 
     public void setSlug(String slug) {
         this.slug = slug;
+    }
+
+    public void setMedias(Set<Media> medias) {
+        this.medias = medias;
     }
 }

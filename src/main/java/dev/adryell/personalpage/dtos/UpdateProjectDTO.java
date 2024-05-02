@@ -10,6 +10,7 @@ public record UpdateProjectDTO(
         @NotBlank(message = "Field can't be blank.") String description,
         Boolean active,
         List<Long> tagIds,
-        UUID creatorId
+        UUID creatorId,
+        Long thumbnailId
 ) {
 }

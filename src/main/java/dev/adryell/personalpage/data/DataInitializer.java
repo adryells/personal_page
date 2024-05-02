@@ -1,11 +1,14 @@
 package dev.adryell.personalpage.data;
 
+import dev.adryell.personalpage.models.MediaContentType;
 import dev.adryell.personalpage.models.Permission;
 import dev.adryell.personalpage.models.Role;
 import dev.adryell.personalpage.models.User;
+import dev.adryell.personalpage.repositories.MediaContentTypeRepository;
 import dev.adryell.personalpage.repositories.PermissionRepository;
 import dev.adryell.personalpage.repositories.RoleRepository;
 import dev.adryell.personalpage.repositories.UserRepository;
+import dev.adryell.personalpage.utils.enums.MediaContentTypes;
 import dev.adryell.personalpage.utils.enums.Roles;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +29,16 @@ public class DataInitializer {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private MediaContentTypeRepository mediaContentTypeRepository;
+
     record RoleData(List<String> permissions, String name, String slug, String description) {
     }
 
     record UserData(String role_slug, String name, String email, String password) {
+    }
+
+    record MediaContentTypeData(MediaContentTypes name, String description) {
     }
 
     @PostConstruct
@@ -37,6 +46,7 @@ public class DataInitializer {
         this.createPermissions();
         this.createRoles();
         this.createUsers();
+        this.createMediaContentTypes();
     }
 
     public void createRoles() {
@@ -49,7 +59,7 @@ public class DataInitializer {
                 role.setName(role_datum.name);
                 role.setDescription(role_datum.description);
                 roleRepository.save(role);
-                System.out.println("Role " + role.getName() + " Atualizada.");
+                System.out.println("Role " + role.getName() + " Updated.");
             } else {
                 Role new_role = new Role();
                 new_role.setName(role_datum.name);
@@ -64,7 +74,7 @@ public class DataInitializer {
 
                 new_role.setPermissions(permissions);
                 roleRepository.save(new_role);
-                System.out.println("Role " + new_role.getName() + " Adicionada.");
+                System.out.println("Role " + new_role.getName() + " Added.");
             }
         }
     }
@@ -105,14 +115,14 @@ public class DataInitializer {
                 permission.setName(permission_name);
                 permission.setDescription(String.format("Allows %s.", permission_name));
                 permissionRepository.save(permission);
-                System.out.println("Permissão " + permission_name + " Atualizada.");
+                System.out.println("Permission " + permission_name + " Updated.");
             } else {
                 Permission new_permission = new Permission();
                 new_permission.setName(permission_name);
                 new_permission.setSlug(slug);
                 new_permission.setDescription(String.format("Allows %s.", permission_name));
                 permissionRepository.save(new_permission);
-                System.out.println("Permissão " + permission_name + " Adicionada.");
+                System.out.println("Permission " + permission_name + " Added.");
             }
         }
     }
@@ -135,7 +145,7 @@ public class DataInitializer {
                 Role role = roleRepository.findBySlug(user_datum.role_slug);
                 user.setRole(role);
                 userRepository.save(user);
-                System.out.println("Usuário " + user.getName() + " Atualizado.");
+                System.out.println("User " + user.getName() + " Updated.");
             } else {
                 user = new User();
                 user.setName(user_datum.name);
@@ -146,8 +156,39 @@ public class DataInitializer {
                 Role role = roleRepository.findBySlug(user_datum.role_slug);
                 user.setRole(role);
                 userRepository.save(user);
-                System.out.println("Usuário " + user.getName() + " Adicionado.");
+                System.out.println("User " + user.getName() + " Added.");
             }
         }
+    }
+
+    public void createMediaContentTypes() {
+        List<MediaContentTypeData> media_content_type_data = List.of(
+                new MediaContentTypeData(MediaContentTypes.PROFILE_PICTURE, "User's profile picture."),
+                new MediaContentTypeData(MediaContentTypes.TAG_ICON, "Tag's icon."),
+                new MediaContentTypeData(MediaContentTypes.POST_THUMBNAIL, "Post's thumbnail."),
+                new MediaContentTypeData(MediaContentTypes.POST_CONTENT, "Post's content."),
+                new MediaContentTypeData(MediaContentTypes.PROJECT_THUMBNAIL, "Project's thumbnail.")
+        );
+
+        media_content_type_data.forEach(this::insertMediaContentType);
+    }
+
+    private void insertMediaContentType(MediaContentTypeData datum){
+        MediaContentType mediaContentType = new MediaContentType();
+
+        String slug = datum.name.toString().toLowerCase();
+        Optional<MediaContentType> existingMediaContentType = mediaContentTypeRepository.findBySlug(slug);
+
+        if (existingMediaContentType.isPresent()){
+            mediaContentType = existingMediaContentType.get();
+            System.out.println("Updating media content type: " + mediaContentType.getSlug());
+        } else {
+            mediaContentType.setSlug(slug);
+            mediaContentType.setName(datum.name.toString().replace("_", " "));
+            System.out.println("Adding media content type: " + slug);
+        }
+
+        mediaContentType.setDescription(datum.description);
+        mediaContentTypeRepository.save(mediaContentType);
     }
 }

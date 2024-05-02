@@ -1,6 +1,7 @@
 package dev.adryell.personalpage.models;
 import jakarta.persistence.*;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -21,6 +22,22 @@ public class User extends BaseDateTime{
     @OneToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_media",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "media_id")
+    )
+    private Set<Media> medias;
+
+    public Set<Media> getMedias() {
+        return medias;
+    }
+
+    public void setMedias(Set<Media> medias) {
+        this.medias = medias;
+    }
 
     public Role getRole() {
         return role;
