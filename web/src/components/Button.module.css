@@ -1,0 +1,21 @@
+.button button{
+    border: none;
+    background-color: gray;
+    height: 100%;
+    width: 100%;
+    padding: 2%;
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button button:hover{
+    transition: ease-out 0.5s;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
+

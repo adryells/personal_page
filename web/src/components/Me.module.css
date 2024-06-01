@@ -1,0 +1,12 @@
+.my_pfp{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40%;
+    position: relative;
+}
+
+.my_pfp img{
+    border-radius: 20%;
+    height: 100%;
+}

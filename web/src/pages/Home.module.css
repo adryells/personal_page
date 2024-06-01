@@ -1,0 +1,26 @@
+.container{
+    display: flex;
+    flex-direction: column;
+     height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: black;
+    color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+.horizontalContainer {
+    display: flex;
+    flex-direction: row  ;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.horizontalContainer > * {
+    flex-basis: 33%;
+    /* flex-grow: 1; */
+    box-sizing: border-box;
+    padding: 10px;
+}
