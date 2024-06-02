@@ -1,0 +1,18 @@
+.socialArea {
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .socialArea li {
+    margin: 0 10px;
+  }
+  
+  .socialArea a {
+    color: white; 
+  }
+  
+  .socialArea a:hover {
+    color: lightgray; 
+  }
+  

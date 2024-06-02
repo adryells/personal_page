@@ -1,14 +1,11 @@
 import styles from "./HomeInfo.module.css";
 
-const HomeInfo = (
-    props: any
-) => {
+const HomeInfo = (props: any) => {
     return (
-      <p className={styles.p}>
+      <p className={`${styles.p} ${props.className}`}>
         {props.text}
       </p>
     );
-  };
+};
   
-  export default HomeInfo;
-  
+export default HomeInfo;
