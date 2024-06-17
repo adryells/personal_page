@@ -1,0 +1,35 @@
+.socialArea {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.socialArea li {
+  margin: 0 10px;
+}
+
+.socialArea a {
+  color: white;
+  font-size: 1.5rem; 
+}
+
+.socialArea a:hover {
+  color: lightgray;
+}
+
+@media (max-width: 600px) {
+  .socialArea {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .socialArea li {
+    margin: 0 10px;
+  }
+
+  .socialArea a {
+    font-size: 1.2rem; 
+  }
+}
