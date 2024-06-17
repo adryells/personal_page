@@ -1,54 +1,88 @@
 .container {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90vw; 
+  max-width: 1200px;
+  height: 90vh; 
+  max-height: 800px; 
+  background-color: black;
+  color: white;
+  padding: 20px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+  border-radius: 10px; 
+  box-sizing: border-box;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 10px;
+  margin-bottom: 20px; 
+  box-sizing: border-box;
+}
+
+.title {
+  flex: 1;
+  font-size: 1.5rem;
+}
+
+.buttons {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mainContent {
+  padding: 20px;
+  text-align: justify; 
+  margin-bottom: 20px; 
+  font-size: 1rem; 
+  box-sizing: border-box;
+}
+
+.socialArea {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: 95vw;
+    height: auto; 
+    padding: 10px; 
+  }
+
+  .header {
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
-    color: white;
+    align-items: flex-start;
   }
-  
-  .topRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
+
+  .title {
+    font-size: 1.2rem; 
+  }
+
+  .buttons {
+    flex-direction: row; 
     width: 100%;
-    flex: 7; 
+    margin-top: 10px;
   }
-  
-  .homeInfo {
-    flex: 1;
-    padding: 20px;
-    overflow: auto;
-    height: 100%;
-  }
-  
-  .me {
-    flex: 3; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 20px;
-  }
-  
-  .bottomRow {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    flex: 3;
-  }
-  
+
   .buttonContainer {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    margin-bottom: 10px;
   }
-  
-  .button {
-    margin: 20px;
+
+  .mainContent {
+    font-size: 0.9rem; 
+    padding: 10px;
   }
-  
+
+  .socialArea {
+    margin-top: 10px;
+  }
+}
+
+

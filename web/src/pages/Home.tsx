@@ -1,27 +1,33 @@
 import Button from "../components/Button";
-import HomeInfo from "../components/HomeInfo";
-import Me from "../components/Me";
 import SocialArea from "../components/SocialArea";
 import styles from "./Home.module.css";
 
 const Home = () => {    
     return (
       <div className={styles.container}>
-        <Me className={styles.me}/>
-        <div className={styles.topRow}>
-          <HomeInfo text="Who Am I?
-          I'm [Your Name], a [Your Profession/Interest]. With a background in [Your Field or Experience], I have spent the past [X] years diving into [Your Key Interests or Projects]. My work and hobbies span across various domains, and I love sharing my experiences and insights with others." className={styles.homeInfo}/>
-          <HomeInfo text="I invite you to explore my page and join me on this journey. Your thoughts and feedback are always welcome, so feel free to reach out or leave a comment. Together, let's inspire and be inspired." className={styles.homeInfo}/>
-        </div>
-        <div className={styles.bottomRow}>
-          <div className={styles.buttonContainer}>
-            <Button value="Clique aqui para acessar meus projetos" route="/projects" className={styles.button}/>
-            <Button value="Clique aqui para acessar meu blog" route="/blog" className={styles.button}/>
-          </div>
-          <SocialArea />
-        </div>
+          <header className={styles.header}>
+            <div className={styles.title}>
+              <h2>Adryell</h2>
+            </div>
+            <div className={styles.buttons}>
+              <Button value="Home" className={styles.button} route="/" />
+              <Button value="Blog" className={styles.button} route="/blog" />
+              <Button value="Projetos" className={styles.button} route="/projects" />
+              <Button value="PT-BR" className={styles.button} route="/r" />
+            </div>
+          </header>
+          <main className={styles.mainContent}>
+            <p>
+              I'm Adryell, a developer with a background in backend web development. In 3 years of professional experience, I have already contributed to projects on various topics such as: Course platforms (including individual sales and subscriptions), boat rentals, social networks, financial management systems and a bot for the general administration of a course platform.
+            </p>
+            <br />
+            <p>
+              In my education, I spent 3 years on a technical IT course integrated into high school where I gained knowledge on various topics such as databases, operating systems, algorithms/data structures, systems development methodology and IT entrepreneurship. Then, I entered computer science college, where I spent a few periods. In addition to those already seen in the technical course, I was immersed in OOP, human-computer interface and functional programming. In all these years, I have had experience with various technologies such as Python (my main), Java, C, C#, JavaScript, PHP, Dart, GraphQL, REST, Docker, GIT, Linux and others.
+            </p>
+          </main>
+          <SocialArea className={styles.socialArea} />
       </div>
     );
 };
-  
+
 export default Home;
