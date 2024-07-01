@@ -1,0 +1,24 @@
+.projectDetails {
+    position: absolute;
+    top: 10vh;
+    padding: 2rem;
+    background-color: #111;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.projectDetails h1 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.projectDetails p {
+  margin-bottom: 1rem;
+}
+
+.projectDetails img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+  
