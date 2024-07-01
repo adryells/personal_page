@@ -48,6 +48,7 @@ public class ProjectController {
 
         project.setTitle(projectData.title());
         project.setDescription(projectData.description());
+        project.setContent(projectData.content());
 
         UUID token = UUID.fromString(request.getHeader("Authorization").replace("Bearer ", ""));
         User user = authTokenRepository.findByTokenAndActiveTrue(token).getUser();
@@ -118,6 +119,10 @@ public class ProjectController {
 
         if (projectData.description() != null) {
             project.setDescription(projectData.description());
+        }
+
+        if (projectData.content() != null) {
+            project.setContent(projectData.content());
         }
 
         if (projectData.active() != null) {
@@ -212,9 +217,10 @@ public class ProjectController {
                 project.getTitle(),
                 project.getDescription(),
                 project.isActive(),
-                project.getCreator().getId(),
-                project.getTags().stream().map(Tag::getName).collect(Collectors.toList()),
-                project.getThumbnail() != null ? project.getThumbnail().getURL() : null
+                project.getCreator() != null ? project.getCreator().getId() : null,
+                project.getTags() != null ?project.getTags().stream().map(Tag::getName).collect(Collectors.toList()) : null,
+                project.getThumbnail() != null ? project.getThumbnail().getURL() : null,
+                project.getContent()
         );
     }
 
@@ -225,7 +231,8 @@ public class ProjectController {
             Boolean active,
             UUID creatorId,
             List<String> tags,
-            String thumbnailURL
+            String thumbnailURL,
+            String content
     ) implements ProjectProjection {
     }
 }

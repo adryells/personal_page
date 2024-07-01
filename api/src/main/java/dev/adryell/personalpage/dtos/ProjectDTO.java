@@ -8,6 +8,7 @@ import java.util.List;
 public record ProjectDTO(
         @NotBlank(message = "Field can't be blank.") @NotNull(message = "Field can't be null.") String title,
         @NotBlank(message = "Field can't be blank.") @NotNull(message = "Field can't be null.") String description,
+        String content,
         Boolean active,
         List<Long> tagIds,
         Long thumbnailId

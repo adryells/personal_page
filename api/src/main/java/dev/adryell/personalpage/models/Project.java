@@ -17,6 +17,9 @@ public class Project extends BaseDateTime{
     @Column(nullable = false)
     private String description;
 
+    @Column(nullable = true, length=50000)
+    private String content;
+
     @Column(nullable = false)
     private boolean active = false;
 
@@ -72,6 +75,10 @@ public class Project extends BaseDateTime{
         return id;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public User getCreator() {
         return creator;
     }
@@ -86,6 +93,10 @@ public class Project extends BaseDateTime{
                 )
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public void setDescription(String description) {

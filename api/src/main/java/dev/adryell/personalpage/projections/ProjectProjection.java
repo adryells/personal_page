@@ -10,4 +10,5 @@ public interface ProjectProjection {
     Boolean active();
     UUID creatorId();
     List<String> tags();
+    String content();
 }
