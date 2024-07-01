@@ -17,7 +17,7 @@ public class Post extends BaseDateTime{
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50000)
     private String content;
 
     @Column(nullable = false)

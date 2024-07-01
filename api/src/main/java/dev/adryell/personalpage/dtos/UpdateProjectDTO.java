@@ -11,6 +11,7 @@ public record UpdateProjectDTO(
         Boolean active,
         List<Long> tagIds,
         UUID creatorId,
-        Long thumbnailId
+        Long thumbnailId,
+        String content
 ) {
 }
