@@ -38,12 +38,12 @@
 
 @media (max-width: 405px) {
   .buttonContainer {
-    margin: 10px 0; /* Adiciona margem entre os botões */
+    margin: 10px 0;
     width: 100%;
   }
 
   .button {
-    width: 100%; /* Garante que o botão ocupe toda a largura disponível */
+    width: 100%;
     height: auto;
   }
 }
