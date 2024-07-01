@@ -1,14 +1,34 @@
-const Projects = () => {
-    return (
-      <div>
-        <h1>Projetos</h1>
-        <p>ANAL INVERTIDO COM UM MACACO</p>
-        <p>LAMBIDA NA TIA DO LANCHE DO ENSINO MEDIO</p>
-        <p>AIDS 3</p>
-        <p>PENIS NEGATIVO</p>
-      </div>
-    );
+import React, { useState } from 'react';
+import ProjectList from '../components/ProjectList';
+import Layout from '../components/Layout';
+import styles from './Projects.module.css';
+import CreateProjectModal from '../components/CreateProjectModal';
+
+const Projects: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const token = sessionStorage.getItem('token');
+
+  const openModal = () => {
+    setIsModalOpen(true);
   };
-  
-  export default Projects;
-  
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <Layout>
+      <div className={styles.projectsPage}>
+        {token && (
+          <button onClick={openModal} className={styles.createButton}>
+            Create Project
+          </button>
+        )}
+        <ProjectList />
+        {isModalOpen && <CreateProjectModal onClose={closeModal} />}
+      </div>
+    </Layout>
+  );
+};
+
+export default Projects;
