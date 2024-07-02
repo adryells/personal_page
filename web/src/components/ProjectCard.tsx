@@ -12,17 +12,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     <div className={styles.projectCard}>
       <Link to={`/projects/${project.id}`} className={styles.projectLink}>
         <div className={styles.projectCardContent}>
-          {project.thumbnailURL ? (
-            <img 
-              src={project.thumbnailURL} 
-              alt={project.title} 
-              className={styles.projectThumbnail}
-            />
-          ) : (
-            <div className={styles.projectNoThumbnail}>
-              <h3 className={styles.projectTitle}>{project.title}</h3>
-            </div>
-          )}
+            <h2 className={styles.projectTitle}>{project.title}</h2>
         </div>
       </Link>
     </div>
