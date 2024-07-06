@@ -21,7 +21,7 @@ const SocialArea = (props: any) => {
                 </Link>
             </li>
             <li>
-                <Link to="https://www.instagram.com/_adryell.md/" target="_blank" rel="noopener noreferrer">
+                <Link to="https://www.instagram.com/adryell.md/" target="_blank" rel="noopener noreferrer">
                     <FaInstagram size={30} />
                 </Link>
             </li>
