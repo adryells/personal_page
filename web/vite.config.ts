@@ -6,5 +6,13 @@ export default defineConfig({
   envPrefix: 'VITE_',
   server: {
     historyApiFallback: true
+  },
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      input: {
+        main: 'index.html'
+      }
+    }
   }
 });
