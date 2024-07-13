@@ -5,9 +5,6 @@ export default defineConfig({
   base: '/',
   plugins: [react()],
   envPrefix: 'VITE_',
-  server: {
-    historyApiFallback: true
-  },
   build: {
     outDir: 'dist',
     rollupOptions: {
