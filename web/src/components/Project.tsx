@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Project.module.css';
+import { useTranslation } from 'react-i18next';
 
 interface Contributor {
   name: string;
@@ -28,6 +29,7 @@ const Project: React.FC<ProjectProps> = ({
   contributors
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
 
   const toggleOpen = () => {
     setIsOpen(!isOpen);
@@ -41,15 +43,15 @@ const Project: React.FC<ProjectProps> = ({
       </div>
       {isOpen && (
         <div className={styles.projectDetails}>
-          <p><strong>Visão Geral:</strong> {overview}</p>
-          <p><strong>Tecnologias Utilizadas:</strong> {technologies}</p>
-          <p><strong>Funcionalidades:</strong> {functionalities}</p>
-          {hosting && <p><strong>Hospedagem:</strong> {hosting}</p>}
-          {projectLink && <p><strong>Link para o Projeto:</strong> <a href={projectLink}>{projectLink}</a></p>}
-          {codeLink && <p><strong>Link para o Código:</strong> <a href={codeLink}>{codeLink}</a></p>}
+          <p><strong>{t('overview')}:</strong> {overview}</p>
+          <p><strong>{t('usedTech')}:</strong> {technologies}</p>
+          <p><strong>{t('functionalities')}:</strong> {functionalities}</p>
+          {hosting && <p><strong>{t('hosting')}:</strong> {hosting}</p>}
+          {projectLink && <p><strong>{t('projectLink')}:</strong> <a href={projectLink}>{projectLink}</a></p>}
+          {codeLink && <p><strong>{t('codeLink')}:</strong> <a href={codeLink}>{codeLink}</a></p>}
           {contributors && (
             <div>
-              <p><strong>Contribuidores:</strong></p>
+              <p><strong>{t('contributors')}:</strong></p>
               <ul>
                 {contributors.map((contributor, index) => (
                   <li key={index}>
