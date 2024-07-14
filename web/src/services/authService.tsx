@@ -5,7 +5,8 @@ export async function login(email: string, password: string): Promise<void> {
     const response = await api.post('user/login', { email, password });
 
     if (response.status !== 201) {
-      throw new Error('Login failed');
+      console.log("Uwu")
+      //throw new Error('Login failed');
     }
 
     const token: string = response.data;

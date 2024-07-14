@@ -27,9 +27,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className={buttonStyles.buttonContainer}>
             <Button value="Home" className={buttonStyles.button} route="/" />
           </div>
-          {/*<div className={buttonStyles.buttonContainer}>
-            <Button value={t('blog')} className={buttonStyles.button} route="/blog" />
-          </div>*/}
           <div className={buttonStyles.buttonContainer}>
             <Button value={t('projects')} className={buttonStyles.button} route="/projects" />
           </div>

@@ -1,31 +1,36 @@
-import React, { useState } from 'react';
-import ProjectList from '../components/ProjectList';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Layout from '../components/Layout';
+import Project from '../components/Project';
+import projectsData from '../services/projectsData.json';
 import styles from './Projects.module.css';
-import CreateProjectModal from '../components/CreateProjectModal';
 
 const Projects: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const token = sessionStorage.getItem('token');
+  const { i18n } = useTranslation();
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  const currentLang = i18n.language || 'en';
+  const currentProjects = projectsData[currentLang as keyof typeof projectsData];
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  if (!Array.isArray(currentProjects)) {
+    throw new Error('Invalid projects data format'); 
+  }
 
   return (
     <Layout>
       <div className={styles.projectsPage}>
-        {token && (
-          <button onClick={openModal} className={styles.createButton}>
-            Create Project
-          </button>
-        )}
-        <ProjectList />
-        {isModalOpen && <CreateProjectModal onClose={closeModal} />}
+        {currentProjects.map((project, index) => (
+          <Project
+            key={index}
+            title={project.title}
+            overview={project.overview}
+            technologies={project.technologies}
+            functionalities={project.functionalities}
+            hosting={project.hosting}
+            projectLink={project.projectLink}
+            codeLink={project.codeLink}
+            contributors={project.contributors}
+          />
+        ))}
       </div>
     </Layout>
   );

@@ -1,0 +1,128 @@
+{
+  "pt": [
+    {
+      "title": "Personal Page",
+      "overview": "Este projeto é uma página pessoal que desenvolvi utilizando tecnologias modernas como Vite, React e TypeScript. A página serve como um portfólio interativo e dinâmico, onde apresento informações sobre mim, minhas habilidades, projetos anteriores e formas de contato.",
+      "technologies": "Vite, ReactJS, TypeScript, Java (Spring Boot), Docker, PostgreSQL",
+      "functionalities": "Design Responsivo, Portfólio de Projetos",
+      "hosting": "Render",
+      "projectLink": "www.adryell.com",
+      "codeLink": "https://github.com/adryells/personal_page",
+      "contributors": [
+        {"name": "João Arthur Weber", "url": "https://github.com/UdyWeber"}
+      ]
+    },
+    {
+      "title": "Github Followers Manager",
+      "overview": "O Github Followers Manager é uma aplicação desktop desenvolvida em Java que permite aos usuários gerenciar seus seguidores no GitHub de forma fácil e eficiente. A aplicação fornece uma interface gráfica intuitiva para visualizar, filtrar e interagir com a lista de seguidores, novos seguidores e usuários que deixaram de seguir.",
+      "technologies": "Java, Swing, Github API e SQLite",
+      "functionalities": "Real-time chat, integration with external API",
+      "codeLink": "https://github.com/adryells/github-followers-manager",
+      "contributors": [
+        {"name": "João Arthur Weber", "url": "https://github.com/UdyWeber"}
+      ]
+    },
+    {
+      "title": "TFA",
+      "overview": "O projeto TFA (Time to Finish Watching an Anime) é uma aplicação web desenvolvida para ajudar os usuários a acompanhar o progresso e o tempo necessário para finalizar a visualização de animes.",
+      "technologies": "Vite, ReactJS, TypeScript, Caddy, Docker, SQLAlchemy (PostgreSQL), GraphQL Python (FastAPI)",
+      "functionalities": "Design Responsivo, Portfólio de Projetos",
+      "hosting": "Vercel",
+      "projectLink": "https://timefinishanime.vercel.app/",
+      "codeLink": "https://github.com/adryells/personal_page"
+    },
+    {
+      "title": "Caxias",
+      "overview": "Website sobre a cidade de caxias - MA",
+      "technologies": "HTML, CSS",
+      "functionalities": "Landing page não interativa",
+      "hosting": "Github",
+      "projectLink": "https://adryells.github.io/caxias/",
+      "codeLink": "https://github.com/adryells/caxias"
+    },
+    {
+      "title": "Funny Polls",
+      "overview": "Este projeto provê uma lista de enquetes de diferentes temas e armazena os resultados.",
+      "technologies": "Django, SQLite, HTML, CSS",
+      "functionalities": "Listagem de enquetes, Armazenamento de votos",
+      "codeLink": "https://github.com/adryells/FunnyPolls"
+    },
+    {
+      "title": "AgendaDeContatos",
+      "overview": "Um simples gerenciador de contatos.",
+      "technologies": "Django, Bootstrap, SQLite",
+      "functionalities": "Admin de contatos, Listagem e busca de contatos",
+      "codeLink": "https://github.com/adryells/AgendaDeContatos"
+    },
+    {
+      "title": "Biblios",
+      "overview": "Este projeto é uma página pessoal que desenvolvi utilizando tecnologias modernas como Vite, React e TypeScript. A página serve como um portfólio interativo e dinâmico, onde apresento informações sobre mim, minhas habilidades, projetos anteriores e formas de contato.",
+      "technologies": "Django, SQLite, HTML, CSS",
+      "functionalities": "Listagem, deleção, adição e atualização de livros",
+      "codeLink": "https://github.com/adryells/biblios"
+    }
+  ],
+  "en": [
+    {
+      "title": "Personal Page",
+      "overview": "This project is a personal page I developed using modern technologies like Vite, React, and TypeScript. The page serves as an interactive and dynamic portfolio where I present information about myself, my skills, previous projects, and contact methods.",
+      "technologies": "Vite, ReactJS, TypeScript, Java (Spring Boot), Docker, PostgreSQL",
+      "functionalities": "Responsive Design, Project Portfolio",
+      "hosting": "Render",
+      "projectLink": "www.adryell.com",
+      "codeLink": "https://github.com/adryells/personal_page",
+      "contributors": [
+        {"name": "João Arthur Weber", "url": "https://github.com/UdyWeber"}
+      ]
+    },
+    {
+      "title": "Github Followers Manager",
+      "overview": "The Github Followers Manager is a desktop application developed in Java that allows users to manage their followers on GitHub easily and efficiently. The application provides an intuitive graphical interface to view, filter, and interact with the list of followers, new followers, and unfollowers.",
+      "technologies": "Java, Swing, Github API, and SQLite",
+      "functionalities": "Real-time chat, integration with external API",
+      "codeLink": "https://github.com/adryells/github-followers-manager",
+      "contributors": [
+        {"name": "João Arthur Weber", "url": "https://github.com/UdyWeber"}
+      ]
+    },
+    {
+      "title": "TFA",
+      "overview": "The TFA (Time to Finish Watching an Anime) project is a web application developed to help users track their progress and the time needed to finish watching anime.",
+      "technologies": "Vite, ReactJS, TypeScript, Caddy, Docker, SQLAlchemy (PostgreSQL), GraphQL Python (FastAPI)",
+      "functionalities": "Responsive Design, Project Portfolio",
+      "hosting": "Vercel",
+      "projectLink": "https://timefinishanime.vercel.app/",
+      "codeLink": "https://github.com/adryells/personal_page"
+    },
+    {
+      "title": "Caxias",
+      "overview": "Website about the city of Caxias - MA",
+      "technologies": "HTML, CSS",
+      "functionalities": "Non-interactive landing page",
+      "hosting": "Github",
+      "projectLink": "https://adryells.github.io/caxias/",
+      "codeLink": "https://github.com/adryells/caxias"
+    },
+    {
+      "title": "Funny Polls",
+      "overview": "This project provides a list of polls on different topics and stores the results.",
+      "technologies": "Django, SQLite, HTML, CSS",
+      "functionalities": "Poll listing, Vote storage",
+      "codeLink": "https://github.com/adryells/FunnyPolls"
+    },
+    {
+      "title": "AgendaDeContatos",
+      "overview": "A simple contact manager.",
+      "technologies": "Django, Bootstrap, SQLite",
+      "functionalities": "Contact admin, Contact listing and search",
+      "codeLink": "https://github.com/adryells/AgendaDeContatos"
+    },
+    {
+      "title": "Biblios",
+      "overview": "This project is a personal page I developed using modern technologies like Vite, React, and TypeScript. The page serves as an interactive and dynamic portfolio where I present information about myself, my skills, previous projects, and contact methods.",
+      "technologies": "Django, SQLite, HTML, CSS",
+      "functionalities": "Book listing, deletion, addition, and update",
+      "codeLink": "https://github.com/adryells/biblios"
+    }
+  ]
+}
