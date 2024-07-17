@@ -16,7 +16,7 @@
       "title": "Github Followers Manager",
       "overview": "O Github Followers Manager é uma aplicação desktop desenvolvida em Java que permite aos usuários gerenciar seus seguidores no GitHub de forma fácil e eficiente. A aplicação fornece uma interface gráfica intuitiva para visualizar, filtrar e interagir com a lista de seguidores, novos seguidores e usuários que deixaram de seguir.",
       "technologies": "Java, Swing, Github API e SQLite",
-      "functionalities": "Real-time chat, integration with external API",
+      "functionalities": "Integração com API externa",
       "codeLink": "https://github.com/adryells/github-followers-manager",
       "contributors": [
         {"name": "João Arthur Weber", "url": "https://github.com/UdyWeber"}
@@ -78,8 +78,8 @@
     {
       "title": "Github Followers Manager",
       "overview": "The Github Followers Manager is a desktop application developed in Java that allows users to manage their followers on GitHub easily and efficiently. The application provides an intuitive graphical interface to view, filter, and interact with the list of followers, new followers, and unfollowers.",
-      "technologies": "Java, Swing, Github API, and SQLite",
-      "functionalities": "Real-time chat, integration with external API",
+      "technologies": "Java, Swing, Github API and SQLite",
+      "functionalities": "Integration with external API",
       "codeLink": "https://github.com/adryells/github-followers-manager",
       "contributors": [
         {"name": "João Arthur Weber", "url": "https://github.com/UdyWeber"}
