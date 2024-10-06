@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./Button.module.css";
 
 interface ButtonProps {
-  value: string;
+  value: any;
   className?: string;
   route?: string;
   onClick?: () => void;

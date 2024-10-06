@@ -31,7 +31,11 @@
   flex: 1;
   font-size: 1.5rem;
   text-align: center;
-  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-bottom: 20px;
+  width: 100vh;
 }
 
 .buttons {
@@ -60,6 +64,19 @@
 
 .socialArea {
   padding-bottom: 5vh;
+}
+
+.languageContainer{
+  cursor: pointer;
+}
+
+.flagIcon{
+  width: 60px;
+  height: 40px;
+}
+
+.flagIcon:hover{
+  opacity: 0.4;
 }
 
 @media (max-width: 405px) {
