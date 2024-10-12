@@ -13,8 +13,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { t, i18n } = useTranslation();
 
   const toggleLanguage = () => {
-    const newLanguage = i18n.language === 'en' ? 'pt' : 'en';
-    i18n.changeLanguage(newLanguage);
+    const languages = ['en', 'pt', 'es'];
+    const nextLanguage = languages[(languages.indexOf(i18n.language) + 1) % languages.length];
+    i18n.changeLanguage(nextLanguage);
   };
 
   return (
@@ -31,7 +32,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <Button value={t('projects')} className={buttonStyles.button} route="/projects" />
           </div>
           <div className={buttonStyles.buttonContainer}>
-            <Button value={i18n.language === 'en' ? 'PT-BR' : 'EN-US'} className={buttonStyles.button} onClick={toggleLanguage} />
+            <div className={styles.languageContainer}>
+            {i18n.language === 'pt' ? (
+              <img className={styles.flagIcon} src="assets/flags/br.png" alt="PT-BR" onClick={toggleLanguage} />
+            ) : i18n.language === 'es' ? (
+              <img className={styles.flagIcon} src="assets/flags/es.webp" alt="ES" onClick={toggleLanguage} />
+            ) : (
+              <img className={styles.flagIcon} src="/assets/flags/us.png" alt="EN-US" onClick={toggleLanguage} />
+            )}
+          </div>
           </div>
         </div>
       </header>

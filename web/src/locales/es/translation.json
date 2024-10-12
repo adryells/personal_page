@@ -1,0 +1,15 @@
+{
+  "title": "Adryell",
+  "home": "Inicio",
+  "blog": "Blog",
+  "projects": "Proyectos",
+  "text_1": "Soy Adryell, un desarrollador con experiencia en desarrollo web backend. En 3 años de experiencia profesional, he contribuido en proyectos sobre diversos temas como: Plataformas de cursos (incluyendo ventas y suscripciones individuales), alquiler de barcos, redes sociales, sistemas de gestión financiera y un bot para la administración general de una plataforma de cursos.",
+  "text_2": "En mi formación, pasé 3 años en un curso técnico de informática integrado a la educación secundaria donde adquirí conocimientos sobre diversos temas como bases de datos, sistemas operativos, algoritmos/estructuras de datos, metodología de desarrollo de sistemas y emprendimiento en TI. Luego, ingresé en la facultad de ciencias de la computación, donde cursé varios semestres. Además de lo aprendido en el curso técnico, tuve inmersión en OOP, interfaz humano-computadora y programación funcional. En todos estos años, he tenido experiencia con diversas tecnologías como Python (mi principal), Java, C, C#, JavaScript, PHP, Dart, GraphQL, REST, Docker, GIT, Linux y otras.",
+  "overview": "Visión General",
+  "usedTech": "Tecnologías Utilizadas",
+  "functionalities": "Funcionalidades",
+  "hosting": "Alojamiento",
+  "projectLink": "Enlace al Proyecto",
+  "codeLink": "Enlace al Código",
+  "contributors": "Contribuidores"
+}
