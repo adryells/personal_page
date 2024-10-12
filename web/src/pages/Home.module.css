@@ -1,7 +1,40 @@
-.mainContent {
-  padding: 20px;
+.bodyMain{
+  display: flex;
+  flex-direction: row;
+}
+
+.texts {
   text-align: start; 
   margin-bottom: 20px; 
+  margin-left: 20px;
   font-size: 1rem; 
   box-sizing: border-box;
+}
+
+.profilePicture{
+  height: 35vh;
+  margin-bottom: 5vh;
+  border: 4px solid gray;
+  border-radius: 5px;
+}
+
+.profilePicture img{
+  width: 30vh;
+  height: 100%;
+}
+
+@media (max-width: 560px) {
+  .bodyMain {
+    flex-direction: column;
+  }
+  .profilePicture{
+    text-align: center;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .profilePicture img{
+    border: 4px solid gray;
+  }
 }

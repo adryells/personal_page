@@ -7,10 +7,15 @@ const Home = () => {
 
   return (
     <Layout>
-      <div className={styles.mainContent}>
-        <p>{t('text_1')}</p>
-        <br />
-        <p>{t('text_2')}</p>
+      <div className={styles.bodyMain}>
+        <div className={styles.profilePicture}>
+          <img src="/assets/pp/pp.jpg" alt="Me" loading='lazy'/>
+        </div>
+        <div className={styles.texts}>
+          <p>{t('text_1')}</p>
+          <br />
+          <p>{t('text_2')}</p>
+        </div>
       </div>
     </Layout>
   );
