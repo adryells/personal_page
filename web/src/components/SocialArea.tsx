@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram } from "react-icons/fa";
 import styles from "./SocialArea.module.css";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SocialArea = (props: any) => {
     return (
         <ul className={`${styles.socialArea} ${props.className}`}>
