@@ -1,23 +1,54 @@
-import { useTranslation } from 'react-i18next';
-import Layout from '../components/Layout';
+import { useState } from 'react';
 import styles from './Home.module.css';
+import SocialArea from '../components/SocialArea';
 
 const Home = () => {
-  const { t } = useTranslation();
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
 
   return (
-    <Layout>
-      <div className={styles.bodyMain}>
-        <div className={styles.profilePicture}>
-          <img src="/assets/pp/pp.jpg" alt="Me" loading='lazy'/>
-        </div>
-        <div className={styles.texts}>
-          <p>{t('text_1')}</p>
-          <br />
-          <p>{t('text_2')}</p>
-        </div>
+    <div className={`${styles.bodyMain} ${darkMode ? styles.dark : styles.light}`}>
+      <button onClick={toggleDarkMode} className={styles.toggleButton}>
+        {darkMode ? 'Light Mode' : 'Dark Mode'}
+      </button>
+
+      <div className={styles.leftColumn}>
+        <img
+          src="assets/pp/pp1.jpg"
+          alt="Paulo Adryell"
+          className={styles.profileImage}
+        />
+        <h1 className={styles.name}>Paulo Adryell</h1>
+        <h2 className={styles.profession}>Backend Developer</h2>
+        <a href="mailto:adryellpaulo@gmail.com" className={`${styles.contactMe} ${darkMode ? styles.dark : styles.light}`}>
+          Contact me
+        </a>
+        <SocialArea className={styles.socialArea} />
       </div>
-    </Layout>
+
+      <div className={styles.rightColumn}>
+        <p className={styles.aboutMe}>
+          I'm a backend developer with over 3 years of professional experience
+          delivering solutions for platforms such as course management, boat rentals,
+          social networks, financial systems, and automation tools. My journey began in 2018
+          during a technical IT course, and since 2021, I've been seriously focused on expanding
+          my knowledge and skills. This foundation includes databases, algorithms, OOP, functional
+          programming, and more. My expertise spans Python, Java, REST, GraphQL, Docker, Linux, Redis,
+          among other technologies and tools I've worked with throughout the years.
+        </p>
+        <a
+          href="https://github.com/adryells?tab=repositories"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.projectsLink}
+        >
+          View My Projects on GitHub
+        </a>
+      </div>
+    </div>
   );
 };
 

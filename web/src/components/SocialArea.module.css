@@ -11,12 +11,13 @@
 }
 
 .socialArea a {
-  color: white;
+  color: gray;
   font-size: 1.5rem; 
 }
 
 .socialArea a:hover {
-  color: lightgray;
+  color: gray;
+  opacity: 0.7;
 }
 
 @media (max-width: 600px) {
